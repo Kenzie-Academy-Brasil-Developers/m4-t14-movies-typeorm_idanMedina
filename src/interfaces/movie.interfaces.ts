@@ -3,6 +3,7 @@ import {
   movieSchema,
   createMovieSchema,
   readMoviesSchema,
+  listMoviesSchema,
 } from "../schemas/movie.schemas";
 
 type MovieType = z.infer<typeof movieSchema>;
@@ -23,6 +24,7 @@ interface iPagination {
 }
 
 type MovieCreate = z.infer<typeof createMovieSchema>;
-type ListMovies = z.infer<typeof readMoviesSchema>;
+type ListMovies = z.infer<typeof listMoviesSchema>;
+type ReadMovies = z.infer<typeof readMoviesSchema>;
 
-export { MovieType, iMovie, MovieCreate, iPagination, ListMovies };
+export { MovieType, iMovie, MovieCreate, iPagination, ListMovies, ReadMovies };

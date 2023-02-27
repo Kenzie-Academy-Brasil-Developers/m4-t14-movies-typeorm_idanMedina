@@ -10,7 +10,7 @@ const checkBodyRequest =
     const check = schema.parse(req.body);
     req.body = check;
 
-    if (req.method === "POST") {
+    if (req.method === "POST" || req.method === "PATCH") {
       const movieRepository = AppDataSource.getRepository(Movie);
       const findMovie = await movieRepository.findOne({
         where: {

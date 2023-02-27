@@ -10,6 +10,13 @@ const movieSchema = z.object({
 
 const createMovieSchema = movieSchema.omit({ id: true });
 
-const readMoviesSchema = z.array(movieSchema);
+const listMoviesSchema = z.array(movieSchema);
 
-export { movieSchema, createMovieSchema, readMoviesSchema };
+const readMoviesSchema = z.object({
+  prevPage: z.string().nullable(),
+  nextPage: z.string().nullable(),
+  count: z.number(),
+  data: listMoviesSchema,
+});
+
+export { movieSchema, createMovieSchema, listMoviesSchema, readMoviesSchema };
