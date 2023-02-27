@@ -13,10 +13,18 @@ const createMovieService = async (payload: MovieCreate): Promise<Movie> => {
   return newMovie;
 };
 
-const listMoviesService = async (): Promise<Movie[]> => {
+const listMoviesService = async (payload: any): Promise<Movie[]> => {
   const movieRepository = AppDataSource.getRepository(Movie);
+  const page: number = Number(payload.page) || 1;
+  const perPage: number = Number(payload.perPage) || 5;
 
-  const findMovies: ListMovies = await movieRepository.find();
+  const findMovies: ListMovies = await movieRepository.find({
+    take: perPage,
+    skip:perPage*(page -1),
+    order:{
+      id:'ASC'
+    }
+  });
 
   const listMovies = readMoviesSchema.parse(findMovies);
 

@@ -10,7 +10,11 @@ const createMovieController = async (req: Request, res: Response) => {
 };
 
 const listMoviesController = async (req: Request, res: Response) => {
-  const users = await listMoviesService();
+  const pages = {
+    page: req.query.page,
+    perPage: req.query.perPage,
+  };
+  const users = await listMoviesService(pages);
   return res.status(200).json(users);
 };
 
