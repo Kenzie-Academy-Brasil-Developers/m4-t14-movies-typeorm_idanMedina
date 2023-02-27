@@ -17,3 +17,5 @@ export class Movie {
   @Column({ type: "integer" })
   price: number;
 }
+
+export default Movie
