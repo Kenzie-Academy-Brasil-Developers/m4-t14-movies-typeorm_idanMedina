@@ -23,8 +23,16 @@ const createMovieService = async (payload: MovieCreate): Promise<Movie> => {
 
 const listMoviesService = async (payload: any): Promise<ReadMovies> => {
   const movieRepository = AppDataSource.getRepository(Movie);
-  const page: number = Number(payload.query.page) || 1;
-  const perPage: number = Number(payload.query.perPage) || 5;
+  let page: number = Number(payload.query.page) || 1;
+  let perPage: number = Number(payload.query.perPage) || 5;
+
+  if (page <= 0 && !Number.isInteger(page)) {
+    page = 1;
+  }
+
+  if (perPage > 5) {
+    perPage = 5;
+  }
 
   const findMovies: ListMovies = await movieRepository.find({
     take: perPage,
