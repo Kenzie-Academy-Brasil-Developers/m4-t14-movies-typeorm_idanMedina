@@ -1,25 +1,7 @@
 import { AppDataSource } from "../data-source";
-import { Movie } from "../entities/movie.entity";
-import {
-  listMoviesSchema,
-  movieSchema,
-  readMoviesSchema,
-} from "../schemas/movie.schemas";
-import {
-  ListMovies,
-  MovieCreate,
-  ReadMovies,
-} from "../interfaces/movie.interfaces";
-
-const createMovieService = async (payload: MovieCreate): Promise<Movie> => {
-  const movieRepository = AppDataSource.getRepository(Movie);
-  const movie = movieRepository.create(payload);
-
-  await movieRepository.save(movie);
-
-  const newMovie = movieSchema.parse(movie);
-  return newMovie;
-};
+import Movie from "../entities/movie.entity";
+import { ListMovies, ReadMovies } from "../interfaces/movie.interfaces";
+import { listMoviesSchema } from "../schemas/movie.schemas";
 
 const listMoviesService = async (payload: any): Promise<ReadMovies> => {
   const movieRepository = AppDataSource.getRepository(Movie);
@@ -33,6 +15,13 @@ const listMoviesService = async (payload: any): Promise<ReadMovies> => {
   if (perPage > 5) {
     perPage = 5;
   }
+
+  /*  if(payload.query.sort !== "price" || payload.query.sort !== "duration"){
+      payload.query.sort = "id"
+    }
+    if(payload.query.order !== "DESC"){
+      payload.query.order = "ASC"
+    } */
 
   const findMovies: ListMovies = await movieRepository.find({
     take: perPage,
@@ -70,4 +59,4 @@ const listMoviesService = async (payload: any): Promise<ReadMovies> => {
   return readMovies;
 };
 
-export { createMovieService, listMoviesService };
+export default listMoviesService;
