@@ -1,8 +1,5 @@
 import { Request, Response } from "express";
-import {
-  createMovieService,
-  listMoviesService,
-} from "../services";
+import { createMovieService, listMoviesService } from "../services";
 import deleteMovieService from "../services/deleteMovie.service";
 
 const createMovieController = async (req: Request, res: Response) => {
@@ -17,9 +14,9 @@ const listMoviesController = async (req: Request, res: Response) => {
 };
 
 const deleteMovieController = async (req: Request, res: Response) => {
-  const movies = await deleteMovieService(Number(req.params.id));
+  await deleteMovieService(Number(req.params.id));
 
-  return res.status(204).json();
+  return res.status(204).send();
 };
 
 export { createMovieController, listMoviesController, deleteMovieController };

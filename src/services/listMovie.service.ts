@@ -33,7 +33,7 @@ const listMoviesService = async (payload: any): Promise<ReadMovies> => {
   const allMovies: ListMovies = await movieRepository.find();
   const listMovies = listMoviesSchema.parse(findMovies);
 
-  const baseUrl: string = `http://localhost:3000/movies/`;
+  const baseUrl: string = `http://localhost:3000/movies`;
   let prevPage: string | null = `${baseUrl}?page=${
     page - 1
   }&perPage=${perPage}`;
@@ -41,11 +41,15 @@ const listMoviesService = async (payload: any): Promise<ReadMovies> => {
   let nextPage: string | null = `${baseUrl}?page=${
     page + 1
   }&perPage=${perPage}`;
+
   if (page <= 1) {
     prevPage = null;
   }
 
-  if (listMovies.length < 5) {
+  const lastMovieID = allMovies[allMovies.length - 1].id;
+  const includeLastMovie = listMovies.some((movie) => movie.id === lastMovieID);
+
+  if (includeLastMovie) {
     nextPage = null;
   }
 

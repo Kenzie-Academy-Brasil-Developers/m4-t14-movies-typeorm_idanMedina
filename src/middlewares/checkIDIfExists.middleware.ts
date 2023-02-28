@@ -14,7 +14,7 @@ const checkIfMovieExists = async (
   const findMovie = await movieRepository.findOne({
     where: { id: id },
   });
-  console.log(findMovie)
+  console.log(findMovie);
   if (!findMovie) {
     throw new AppError("Movie not found", 404);
   }

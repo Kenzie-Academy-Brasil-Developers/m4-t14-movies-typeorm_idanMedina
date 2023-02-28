@@ -9,7 +9,7 @@ const deleteMovieService = async (id: number): Promise<void> => {
       id: id,
     },
   });
-  await movieRepository.remove(movie!)
+  await movieRepository.remove(movie!);
 };
 
 export default deleteMovieService;
