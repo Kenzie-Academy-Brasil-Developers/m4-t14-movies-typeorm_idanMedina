@@ -7,9 +7,6 @@ import { AppError } from "../errors";
 const checkBodyRequest =
   (schema: ZodTypeAny) =>
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const check = schema.parse(req.body);
-    req.body = check;
-
     if (req.method === "POST" || req.method === "PATCH") {
       const movieRepository = AppDataSource.getRepository(Movie);
       const findMovie = await movieRepository.findOne({
@@ -21,6 +18,9 @@ const checkBodyRequest =
         throw new AppError("Movie already exists", 409);
       }
     }
+
+    const check = schema.parse(req.body);
+    req.body = check;
 
     return next();
   };

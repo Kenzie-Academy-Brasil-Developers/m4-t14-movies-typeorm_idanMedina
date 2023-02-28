@@ -1,3 +1,4 @@
+import { DeepPartial } from "typeorm";
 import { z } from "zod";
 import {
   movieSchema,
@@ -26,5 +27,14 @@ interface iPagination {
 type MovieCreate = z.infer<typeof createMovieSchema>;
 type ListMovies = z.infer<typeof listMoviesSchema>;
 type ReadMovies = z.infer<typeof readMoviesSchema>;
+type updateMovie = DeepPartial<MovieCreate>;
 
-export { MovieType, iMovie, MovieCreate, iPagination, ListMovies, ReadMovies };
+export {
+  MovieType,
+  iMovie,
+  MovieCreate,
+  iPagination,
+  ListMovies,
+  ReadMovies,
+  updateMovie,
+};

@@ -19,4 +19,6 @@ const readMoviesSchema = z.object({
   data: listMoviesSchema,
 });
 
-export { movieSchema, createMovieSchema, listMoviesSchema, readMoviesSchema };
+const updateMovieSchema = createMovieSchema.partial();
+
+export { movieSchema, createMovieSchema, listMoviesSchema, readMoviesSchema, updateMovieSchema };

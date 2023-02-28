@@ -3,10 +3,15 @@ import {
   createMovieController,
   deleteMovieController,
   listMoviesController,
+  updateMovieController,
 } from "../controllers/movie.controllers";
 import checkBodyRequest from "../middlewares/checkBodyReq.middleware";
 import { checkIfMovieExists } from "../middlewares/checkIDIfExists.middleware";
-import { createMovieSchema, movieSchema } from "../schemas/movie.schemas";
+import {
+  createMovieSchema,
+  movieSchema,
+  updateMovieSchema,
+} from "../schemas/movie.schemas";
 
 const movieRoutes: Router = Router();
 
@@ -16,7 +21,12 @@ movieRoutes.post(
   createMovieController
 );
 movieRoutes.get("", listMoviesController);
-movieRoutes.patch("/:id", checkIfMovieExists, checkBodyRequest(movieSchema));
+movieRoutes.patch(
+  "/:id",
+  checkIfMovieExists,
+  checkBodyRequest(updateMovieSchema),
+  updateMovieController
+);
 movieRoutes.delete("/:id", checkIfMovieExists, deleteMovieController);
 
 export default movieRoutes;

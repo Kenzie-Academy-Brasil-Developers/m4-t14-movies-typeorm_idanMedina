@@ -20,6 +20,8 @@ const listMoviesService = async (payload: any): Promise<ReadMovies> => {
     skip: perPage * (page - 1),
     order: {
       id: "ASC",
+      duration: "ASC",
+      price: "ASC"
     },
   });
   const allMovies: ListMovies = await movieRepository.find();
@@ -40,7 +42,7 @@ const listMoviesService = async (payload: any): Promise<ReadMovies> => {
 
   const lastMovieID = allMovies[allMovies.length - 1].id;
   const includeLastMovie = listMovies.some((movie) => movie.id === lastMovieID);
-  
+
   if (includeLastMovie) {
     nextPage = null;
   }
