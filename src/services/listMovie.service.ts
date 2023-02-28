@@ -11,17 +11,9 @@ const listMoviesService = async (payload: any): Promise<ReadMovies> => {
   if (page <= 0 && !Number.isInteger(page)) {
     page = 1;
   }
-
   if (perPage > 5) {
     perPage = 5;
   }
-
-  /*  if(payload.query.sort !== "price" || payload.query.sort !== "duration"){
-      payload.query.sort = "id"
-    }
-    if(payload.query.order !== "DESC"){
-      payload.query.order = "ASC"
-    } */
 
   const findMovies: ListMovies = await movieRepository.find({
     take: perPage,
@@ -34,10 +26,10 @@ const listMoviesService = async (payload: any): Promise<ReadMovies> => {
   const listMovies = listMoviesSchema.parse(findMovies);
 
   const baseUrl: string = `http://localhost:3000/movies`;
+
   let prevPage: string | null = `${baseUrl}?page=${
     page - 1
   }&perPage=${perPage}`;
-
   let nextPage: string | null = `${baseUrl}?page=${
     page + 1
   }&perPage=${perPage}`;
@@ -48,7 +40,7 @@ const listMoviesService = async (payload: any): Promise<ReadMovies> => {
 
   const lastMovieID = allMovies[allMovies.length - 1].id;
   const includeLastMovie = listMovies.some((movie) => movie.id === lastMovieID);
-
+  
   if (includeLastMovie) {
     nextPage = null;
   }
