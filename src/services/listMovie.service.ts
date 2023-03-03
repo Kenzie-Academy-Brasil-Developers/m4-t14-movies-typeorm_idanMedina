@@ -44,7 +44,7 @@ const listMoviesService = async (payload: any): Promise<ReadMovies> => {
     page + 1
   }&perPage=${perPage}`;
 
-  if (listMovies.length === 0) {
+  if (listMovies.length < perPage || listMovies.length === 0) {
     page = page - 1;
     nextPage = null;
   }
@@ -52,8 +52,6 @@ const listMoviesService = async (payload: any): Promise<ReadMovies> => {
   if (page <= 1) {
     prevPage = null;
   }
-
-  
 
   const readMovies: ReadMovies = {
     prevPage: prevPage,
