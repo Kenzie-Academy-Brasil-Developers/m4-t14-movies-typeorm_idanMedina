@@ -7,15 +7,19 @@ import { AppError } from "../errors";
 const checkBodyRequest =
   (schema: ZodTypeAny) =>
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    if (req.method === "POST" || req.method === "PATCH") {
-      const movieRepository = AppDataSource.getRepository(Movie);
-      const findMovie = await movieRepository.findOne({
-        where: {
-          name: req.body.name,
-        },
-      });
-      if (findMovie) {
-        throw new AppError("Movie already exists", 409);
+    const name: string = req.body.name;
+    const method: string = req.method;
+    if (name) {
+      if (method === "POST" || method === "PATCH") {
+        const movieRepository = AppDataSource.getRepository(Movie);
+        const findMovie = await movieRepository.findOne({
+          where: {
+            name: req.body.name,
+          },
+        });
+        if (findMovie) {
+          throw new AppError("Movie already exists.", 409);
+        }
       }
     }
 

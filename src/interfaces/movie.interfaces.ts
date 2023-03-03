@@ -28,6 +28,7 @@ type MovieCreate = z.infer<typeof createMovieSchema>;
 type ListMovies = z.infer<typeof listMoviesSchema>;
 type ReadMovies = z.infer<typeof readMoviesSchema>;
 type updateMovie = DeepPartial<MovieCreate>;
+type Sort = "id" | "duration" | "price";
 
 export {
   MovieType,
@@ -37,4 +38,5 @@ export {
   ListMovies,
   ReadMovies,
   updateMovie,
+  Sort
 };
